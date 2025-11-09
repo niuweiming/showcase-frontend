@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 页面未找到</title>
+    <link rel="icon" href="../assets/images/niuniu.jpg" type="image/x-icon">
+    <meta name="description" content="页面未找到">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- 动态背景 -->
+    <div class="background-animation"></div>
+    
+    <!-- 主内容 -->
+    <main class="hero-container">
+        <!-- 404 错误卡片 -->
+        <div class="intro-card fade-in-up" style="max-width: 600px; text-align: center;">
+            <h1 style="margin-bottom: 1.5rem; font-size: 6rem; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                404
+            </h1>
+            <p class="intro-text" style="font-size: 1.2rem; line-height: 1.8;">
+                抱歉，您访问的页面<span class="highlight">未找到</span>。
+                <br><br>
+                可能页面已被移动或删除，请返回首页继续浏览。
+            </p>
+        </div>
+        
+        <!-- 返回首页按钮 -->
+        <div class="button-group fade-in-up-delay" style="margin-top: 2rem;">
+            <a href="index.html" class="btn btn-primary">
+                <span>返回首页</span>
+            </a>
+        </div>
+    </main>
+    
+    <!-- 自定义光标 -->
+    <div class="cursor-follower" id="custom-cursor"></div>
+    
+    <script src="../js/main.js"></script>
+</body>
+</html>
+

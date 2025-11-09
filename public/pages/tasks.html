@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日任务 - 无风爱自由</title>
+    <link rel="icon" href="../assets/images/niuniu.ico" type="image/x-icon">
+    <meta name="description" content="每日任务管理">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tasks.css">
+</head>
+<body>
+    <!-- 动态背景 -->
+    <div class="background-animation"></div>
+    
+    <!-- 主内容 -->
+    <main class="tasks-container">
+        <!-- 返回按钮 -->
+        <div class="back-button">
+            <a href="index.html" class="btn btn-secondary">
+                <span>← 返回首页</span>
+            </a>
+        </div>
+
+        <!-- 标题 -->
+        <h1 class="tasks-title">📅 每日任务</h1>
+
+        <!-- 日历控制 -->
+        <div class="calendar-controls">
+            <button class="btn-nav" id="prev-month">← 上月</button>
+            <h2 id="current-month-year"></h2>
+            <button class="btn-nav" id="next-month">下月 →</button>
+        </div>
+
+        <!-- 日历 -->
+        <div class="calendar" id="calendar"></div>
+
+        <!-- 任务添加/编辑弹窗 -->
+        <div class="modal-overlay" id="task-modal">
+            <div class="modal-content task-modal">
+                <button class="modal-close" id="close-task-modal">&times;</button>
+                <h2 id="modal-date-title">添加任务</h2>
+                <div class="task-form">
+                    <input type="text" 
+                           id="task-input" 
+                           placeholder="输入任务内容..." 
+                           maxlength="100">
+                    <div class="task-actions">
+                        <button class="btn btn-primary" id="save-task">保存</button>
+                        <button class="btn btn-secondary" id="cancel-task">取消</button>
+                        <button class="btn btn-danger" id="delete-task" style="display: none;">删除</button>
+                    </div>
+                </div>
+                
+                <!-- 任务列表 -->
+                <div class="tasks-list" id="tasks-list">
+                    <!-- 任务项会动态插入这里 -->
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 自定义光标 -->
+    <div class="cursor-follower" id="custom-cursor"></div>
+    
+    <script src="../js/main.js"></script>
+    <script src="../js/tasks.js"></script>
+</body>
+</html>
+
