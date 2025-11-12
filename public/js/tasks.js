@@ -3,6 +3,7 @@ class TaskManager {
     constructor() {
         this.currentDate = new Date();
         this.selectedDate = null;
+        this.editingTaskId = null;  // 新增：跟踪正在编辑的任务ID
         this.tasks = {};
         this.init();
     }
@@ -19,7 +20,6 @@ class TaskManager {
             const response = await fetch('/api/tasks');
             if (response.ok) {
                 const tasks = await response.json();
-                // 同时保存到 localStorage 作为缓存
                 localStorage.setItem('dailyTasks', JSON.stringify(tasks));
                 return tasks;
             }
@@ -27,7 +27,6 @@ class TaskManager {
             console.warn('从服务器加载失败，尝试使用本地缓存:', error);
         }
         
-        // 如果服务器加载失败，从 localStorage 加载缓存
         const stored = localStorage.getItem('dailyTasks');
         return stored ? JSON.parse(stored) : {};
     }
@@ -46,14 +45,12 @@ class TaskManager {
             if (response.ok) {
                 const result = await response.json();
                 if (result.success) {
-                    // 同时保存到 localStorage 作为缓存
                     localStorage.setItem('dailyTasks', JSON.stringify(this.tasks));
                     return true;
                 }
             }
         } catch (error) {
             console.error('保存到服务器失败:', error);
-            // 如果服务器保存失败，至少保存到 localStorage
             localStorage.setItem('dailyTasks', JSON.stringify(this.tasks));
         }
         return false;
@@ -80,6 +77,20 @@ class TaskManager {
         return task;
     }
 
+    // 新增：更新任务
+    async updateTask(dateStr, taskId, newText) {
+        const tasks = this.tasks[dateStr];
+        if (tasks) {
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task.text = newText;
+                await this.saveTasks();
+                return true;
+            }
+        }
+        return false;
+    }
+
     // 切换任务完成状态
     async toggleTask(dateStr, taskId) {
         const tasks = this.tasks[dateStr];
@@ -88,7 +99,6 @@ class TaskManager {
             if (task) {
                 task.completed = !task.completed;
                 await this.saveTasks();
-                // 刷新日历和任务列表
                 this.renderCalendar();
                 const tasksList = this.getTasksForDate(dateStr);
                 this.renderTaskList(dateStr, tasksList);
@@ -104,7 +114,6 @@ class TaskManager {
                 delete this.tasks[dateStr];
             }
             await this.saveTasks();
-            // 刷新日历和任务列表
             this.renderCalendar();
             const tasksList = this.getTasksForDate(dateStr);
             this.renderTaskList(dateStr, tasksList);
@@ -117,22 +126,18 @@ class TaskManager {
         const year = this.currentDate.getFullYear();
         const month = this.currentDate.getMonth();
 
-        // 更新月份显示
         const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月', 
                            '七月', '八月', '九月', '十月', '十一月', '十二月'];
         document.getElementById('current-month-year').textContent = 
             `${year}年 ${monthNames[month]}`;
 
-        // 获取当月第一天和最后一天
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
         const daysInMonth = lastDay.getDate();
         const startDayOfWeek = firstDay.getDay();
 
-        // 清空日历
         calendar.innerHTML = '';
 
-        // 星期标题
         const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
         weekDays.forEach(day => {
             const dayHeader = document.createElement('div');
@@ -141,14 +146,12 @@ class TaskManager {
             calendar.appendChild(dayHeader);
         });
 
-        // 填充空白（月初）
         for (let i = 0; i < startDayOfWeek; i++) {
             const emptyDay = document.createElement('div');
             emptyDay.className = 'calendar-day empty';
             calendar.appendChild(emptyDay);
         }
 
-        // 渲染日期
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
@@ -162,12 +165,10 @@ class TaskManager {
 
             dayElement.className = 'calendar-day';
             
-            // 标记今天
             if (date.getTime() === today.getTime()) {
                 dayElement.classList.add('today');
             }
 
-            // 标记有任务的日期
             if (totalCount > 0) {
                 dayElement.classList.add('has-tasks');
                 if (completedCount === totalCount && totalCount > 0) {
@@ -175,27 +176,21 @@ class TaskManager {
                 }
             }
 
-            // 构建任务显示内容
             let tasksHTML = '';
             if (totalCount > 0) {
-                // 显示前2个任务
                 const tasksToShow = dayTasks.slice(0, 2);
                 tasksHTML = '<div class="day-tasks">';
                 tasksToShow.forEach(task => {
                     const taskClass = task.completed ? 'task-preview completed' : 'task-preview';
                     const taskText = this.escapeHtml(task.text);
-                    // 限制显示长度，避免过长（更严格的限制）
                     const maxLength = 12;
                     const displayText = taskText.length > maxLength ? taskText.substring(0, maxLength) + '...' : taskText;
                     tasksHTML += `<div class="${taskClass}" title="${taskText}" style="max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${displayText}</div>`;
                 });
-                // 如果还有更多任务，显示提示
                 if (dayTasks.length > 2) {
                     tasksHTML += `<div class="task-more">还有 ${dayTasks.length - 2} 个任务...</div>`;
                 }
                 tasksHTML += '</div>';
-                
-                // 任务指示器
                 tasksHTML += `<div class="task-indicator">${completedCount}/${totalCount}</div>`;
             }
             
@@ -209,23 +204,34 @@ class TaskManager {
         }
     }
 
-    // 打开任务弹窗
-    openTaskModal(dateStr, date) {
+    // 打开任务弹窗（支持编辑模式）
+    openTaskModal(dateStr, date, editingTask = null) {
         this.selectedDate = dateStr;
+        this.editingTaskId = editingTask ? editingTask.id : null;
         const modal = document.getElementById('task-modal');
         const tasks = this.getTasksForDate(dateStr);
         
-        // 更新标题
         const dateStrDisplay = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
         document.getElementById('modal-date-title').textContent = dateStrDisplay;
 
-        // 清空输入框
-        document.getElementById('task-input').value = '';
-        document.getElementById('task-input').focus();
+        const input = document.getElementById('task-input');
+        const saveBtn = document.getElementById('save-task');
+        const deleteBtn = document.getElementById('delete-task');
 
-        // 渲染任务列表
+        if (editingTask) {
+            // 编辑模式
+            input.value = editingTask.text;
+            saveBtn.textContent = '更新';
+            deleteBtn.style.display = 'block';
+        } else {
+            // 新增模式
+            input.value = '';
+            saveBtn.textContent = '保存';
+            deleteBtn.style.display = 'none';
+        }
+
         this.renderTaskList(dateStr, tasks);
-
+        input.focus();
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -236,9 +242,11 @@ class TaskManager {
         modal.classList.remove('active');
         document.body.style.overflow = '';
         this.selectedDate = null;
+        this.editingTaskId = null;
+        document.getElementById('task-input').value = '';
     }
 
-    // 渲染任务列表
+    // 渲染任务列表（添加编辑按钮）
     renderTaskList(dateStr, tasks) {
         const tasksList = document.getElementById('tasks-list');
         tasksList.innerHTML = '';
@@ -251,7 +259,6 @@ class TaskManager {
         tasks.forEach(task => {
             const taskItem = document.createElement('div');
             taskItem.className = `task-item ${task.completed ? 'completed' : ''}`;
-            const taskIcon = task.completed ? '✓' : '○';
             taskItem.innerHTML = `
                 <div class="task-checkbox-wrapper">
                     <input type="checkbox" 
@@ -263,10 +270,23 @@ class TaskManager {
                     </label>
                 </div>
                 <span class="task-text">${this.escapeHtml(task.text)}</span>
-                <button class="task-delete" onclick="taskManager.deleteTask('${dateStr}', ${task.id})" title="删除任务">×</button>
+                <div class="task-actions-inline">
+                    <button class="task-edit" onclick="taskManager.editTask('${dateStr}', ${task.id})" title="编辑任务">✎</button>
+                    <button class="task-delete" onclick="taskManager.deleteTask('${dateStr}', ${task.id})" title="删除任务">×</button>
+                </div>
             `;
             tasksList.appendChild(taskItem);
         });
+    }
+
+    // 新增：编辑任务
+    editTask(dateStr, taskId) {
+        const tasks = this.getTasksForDate(dateStr);
+        const task = tasks.find(t => t.id === taskId);
+        if (task) {
+            const date = new Date(dateStr);
+            this.openTaskModal(dateStr, date, task);
+        }
     }
 
     // HTML 转义
@@ -286,7 +306,6 @@ class TaskManager {
 
     // 设置事件监听
     setupEventListeners() {
-        // 上个月/下个月
         document.getElementById('prev-month').addEventListener('click', () => {
             this.currentDate.setMonth(this.currentDate.getMonth() - 1);
             this.renderCalendar();
@@ -297,46 +316,59 @@ class TaskManager {
             this.renderCalendar();
         });
 
-        // 保存任务
+        // 保存/更新任务
         document.getElementById('save-task').addEventListener('click', async () => {
             const input = document.getElementById('task-input');
             const taskText = input.value.trim();
             
-            if (taskText) {
+            if (!taskText) {
+                return;
+            }
+
+            if (this.editingTaskId) {
+                // 更新模式
+                await this.updateTask(this.selectedDate, this.editingTaskId, taskText);
+            } else {
+                // 新增模式
                 await this.addTask(this.selectedDate, taskText);
-                const tasks = this.getTasksForDate(this.selectedDate);
-                this.renderTaskList(this.selectedDate, tasks);
-                this.renderCalendar(); // 刷新日历
-                input.value = '';
-                input.focus();
+            }
+            
+            const tasks = this.getTasksForDate(this.selectedDate);
+            this.renderTaskList(this.selectedDate, tasks);
+            this.renderCalendar();
+            input.value = '';
+            this.editingTaskId = null;
+            input.focus();
+        });
+
+        // 删除任务（从弹窗中删除）
+        document.getElementById('delete-task').addEventListener('click', async () => {
+            if (this.editingTaskId && confirm('确定要删除这个任务吗？')) {
+                await this.deleteTask(this.selectedDate, this.editingTaskId);
+                this.closeTaskModal();
             }
         });
 
-        // 取消
         document.getElementById('cancel-task').addEventListener('click', () => {
             this.closeTaskModal();
         });
 
-        // 关闭按钮
         document.getElementById('close-task-modal').addEventListener('click', () => {
             this.closeTaskModal();
         });
 
-        // 点击背景关闭
         document.getElementById('task-modal').addEventListener('click', (e) => {
             if (e.target.id === 'task-modal') {
                 this.closeTaskModal();
             }
         });
 
-        // 回车保存
         document.getElementById('task-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 document.getElementById('save-task').click();
             }
         });
 
-        // ESC 关闭
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.closeTaskModal();
@@ -345,8 +377,6 @@ class TaskManager {
     }
 }
 
-// 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
     window.taskManager = new TaskManager();
 });
-

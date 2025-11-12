@@ -418,3 +418,58 @@
     }
 }
 
+
+/* ========== 任务操作按钮 ========== */
+.task-actions-inline {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.task-edit {
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+    line-height: 1;
+}
+
+.task-item:hover .task-edit {
+    opacity: 1;
+}
+
+.task-edit:hover {
+    background: rgba(79, 140, 255, 0.2);
+    color: var(--primary-glow);
+}
+
+.task-delete {
+    background: transparent;
+    border: none;
+    color: #ff4757;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+    line-height: 1;
+}
+
+.task-item:hover .task-delete {
+    opacity: 1;
+}
+
+.task-delete:hover {
+    background: rgba(255, 71, 87, 0.2);
+}
