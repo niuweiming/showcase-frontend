@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成长树 - 无风爱自由</title>
+    <link rel="icon" href="../assets/images/niuniu.ico" type="image/x-icon">
+    <meta name="description" content="每日成长记录">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/growth-tree.css">
+</head>
+<body>
+    <!-- 动态背景 -->
+    <div class="background-animation"></div>
+    
+    <!-- 主内容 -->
+    <main class="growth-tree-container">
+        <!-- 返回按钮 -->
+        <div class="back-button">
+            <a href="index.html" class="btn btn-secondary">
+                <span>← 返回首页</span>
+            </a>
+        </div>
+
+        <!-- 标题 -->
+        <h1 class="growth-tree-title">🌳 成长树</h1>
+
+        <!-- 搜索和筛选栏 -->
+        <div class="growth-tree-controls">
+            <div class="search-box">
+                <input type="text" 
+                       id="search-input" 
+                       placeholder="搜索记录内容..." 
+                       class="search-input">
+            </div>
+            <div class="tag-filter">
+                <button class="filter-btn active" data-tag="all">全部</button>
+                <button class="filter-btn" data-tag="学习">学习</button>
+                <button class="filter-btn" data-tag="工作">工作</button>
+                <button class="filter-btn" data-tag="生活">生活</button>
+                <button class="filter-btn" data-tag="思考">思考</button>
+                <button class="filter-btn" data-tag="其他">其他</button>
+            </div>
+            <button class="btn btn-primary" id="add-record-btn">
+                <span>+ 添加记录</span>
+            </button>
+        </div>
+
+        <!-- 成长树内容 -->
+        <div class="tree-wrapper" id="tree-wrapper">
+            <!-- 树形结构会动态插入这里 -->
+        </div>
+
+        <!-- 空状态 -->
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <p>还没有记录，点击上方"添加记录"开始记录你的成长吧！</p>
+        </div>
+
+        <!-- 添加/编辑记录弹窗 -->
+        <div class="modal-overlay" id="record-modal">
+            <div class="modal-content record-modal">
+                <button class="modal-close" id="close-record-modal">&times;</button>
+                <h2 id="modal-title">添加记录</h2>
+                <form class="record-form" id="record-form">
+                    <div class="form-group">
+                        <label for="record-date">日期 *</label>
+                        <input type="date" 
+                               id="record-date" 
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="record-time">时间</label>
+                        <input type="time" 
+                               id="record-time">
+                    </div>
+                    <div class="form-group">
+                        <label for="record-content">内容 *</label>
+                        <textarea id="record-content" 
+                                  placeholder="记录今天发生的事情、想法或感悟..." 
+                                  rows="5" 
+                                  required 
+                                  maxlength="500"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="record-tags">标签（多个用逗号分隔）</label>
+                        <input type="text" 
+                               id="record-tags" 
+                               placeholder="例如：学习,前端,思考">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-record">取消</button>
+                        <button type="button" class="btn btn-danger" id="delete-record" style="display: none;">删除</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 自定义光标 -->
+    <div class="cursor-follower" id="custom-cursor"></div>
+    
+    <script src="../js/main.js"></script>
+    <script src="../js/growth-tree.js"></script>
+</body>
+</html>
+
