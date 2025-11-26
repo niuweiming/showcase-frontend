@@ -3,8 +3,6 @@ class GrowthTreeManager {
     constructor() {
         this.records = {}; // { "2025-01-15": [{ id, content, tags, time, createdAt }] }
         this.filteredRecords = {};
-        this.currentTag = 'all';
-        this.searchQuery = '';
         this.editingRecord = null;
         this.init();
     }
@@ -113,28 +111,8 @@ class GrowthTreeManager {
 
     // 应用筛选和搜索
     applyFilters() {
-        this.filteredRecords = {};
-        
-        Object.keys(this.records).forEach(dateStr => {
-            const dayRecords = this.records[dateStr].filter(record => {
-                // 标签筛选
-                const matchTag = this.currentTag === 'all' || 
-                    (record.tags && record.tags.includes(this.currentTag));
-                
-                // 搜索筛选
-                const matchSearch = !this.searchQuery || 
-                    record.content.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                    (record.tags && record.tags.some(tag => 
-                        tag.toLowerCase().includes(this.searchQuery.toLowerCase())
-                    ));
-                
-                return matchTag && matchSearch;
-            });
-            
-            if (dayRecords.length > 0) {
-                this.filteredRecords[dateStr] = dayRecords;
-            }
-        });
+        // 目前不做搜索和标签筛选，直接使用全部记录
+        this.filteredRecords = { ...this.records };
         
         this.render();
     }
@@ -337,26 +315,13 @@ class GrowthTreeManager {
 
     // 设置事件监听
     setupEventListeners() {
-        // 搜索
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            this.searchQuery = e.target.value;
-            this.applyFilters();
-        });
-
-        // 标签筛选
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                this.currentTag = btn.dataset.tag;
-                this.applyFilters();
-            });
-        });
-
         // 添加按钮
-        document.getElementById('add-record-btn').addEventListener('click', () => {
+        const addBtn = document.getElementById('add-record-btn');
+        if (addBtn) {
+            addBtn.addEventListener('click', () => {
             this.openModal();
-        });
+            });
+        }
 
         // 表单提交
         document.getElementById('record-form').addEventListener('submit', async (e) => {
