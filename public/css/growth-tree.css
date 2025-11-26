@@ -6,7 +6,7 @@
     padding: 2rem;
     position: relative;
     z-index: 1;
-    overflow-x: auto;
+    overflow-x: hidden; /* 避免出现水平滚动导致画面抖动 */
     overflow-y: visible;
     width: 100%;
     box-sizing: border-box;
@@ -206,14 +206,27 @@
     text-align: center;
 }
 
-/* 记录叶子 - 从日期节点展开 */
+/* 记录叶子 - 从日期节点展开（时间线样式：线与卡片分离） */
 .records-leaves {
     display: none;
     flex-direction: column;
+    align-items: flex-start;
     gap: 0.8rem;
     margin-top: 1rem;
-    width: 100%;
+    max-width: 420px;
+    position: relative;       /* 作为竖线定位参考容器 */
+    padding-left: 2.5rem;     /* 给文字卡片留出空间 */
     animation: leafGrow 0.4s ease-out;
+}
+
+.records-leaves::before {
+    content: '';
+    position: absolute;
+    left: 1rem;               /* 固定竖线位置，不随卡片偏移 */
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: rgba(79, 140, 255, 0.6);
 }
 
 .day-branch-node.expanded .records-leaves {
@@ -239,6 +252,7 @@
     transition: all 0.3s ease;
     position: relative;
     backdrop-filter: blur(10px);
+    margin-left: 0;           /* 真正决定位置的是父容器的 padding-left */
 }
 
 .record-leaf::before {

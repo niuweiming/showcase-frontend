@@ -152,7 +152,6 @@ class GrowthTreeManager {
         
         wrapper.innerHTML = `
             <div class="tree-root" style="min-height: ${treeHeight}px;">
-                <div class="tree-trunk" style="height: ${treeHeight}px;"></div>
                 ${sortedMonths.map((monthKey, monthIndex) => {
                     const dates = monthGroups[monthKey];
                     const date = new Date(dates[0]);
