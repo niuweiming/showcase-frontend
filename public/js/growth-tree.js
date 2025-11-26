@@ -111,13 +111,6 @@ class GrowthTreeManager {
         }
     }
 
-    // 删除记录（供onclick调用）
-    async handleDeleteRecord(dateStr, recordId) {
-        if (confirm('确定要删除这条记录吗？')) {
-            await this.deleteRecord(dateStr, recordId);
-        }
-    }
-
     // 应用筛选和搜索
     applyFilters() {
         this.filteredRecords = {};
@@ -146,12 +139,12 @@ class GrowthTreeManager {
         this.render();
     }
 
-    // 渲染树形结构
+    // 渲染真正的树形结构
     render() {
         const wrapper = document.getElementById('tree-wrapper');
         const emptyState = document.getElementById('empty-state');
         
-        const allDates = Object.keys(this.filteredRecords).sort((a, b) => b.localeCompare(a));
+        const allDates = Object.keys(this.filteredRecords).sort((a, b) => a.localeCompare(b)); // 从早到晚排序
         
         if (allDates.length === 0) {
             wrapper.style.display = 'none';
@@ -173,66 +166,72 @@ class GrowthTreeManager {
             monthGroups[monthKey].push(dateStr);
         });
         
-        // 渲染月份组
-        wrapper.innerHTML = Object.keys(monthGroups)
-            .sort((a, b) => b.localeCompare(a))
-            .map(monthKey => {
-                const dates = monthGroups[monthKey];
-                const date = new Date(dates[0]);
-                const monthName = `${date.getFullYear()}年 ${date.getMonth() + 1}月`;
-                const totalCount = dates.reduce((sum, d) => sum + this.filteredRecords[d].length, 0);
-                
-                return `
-                    <div class="month-group">
-                        <div class="month-header">
-                            <h3 class="month-title">${monthName}</h3>
-                            <span class="month-count">共 ${dates.length} 天，${totalCount} 条记录</span>
+        // 渲染树形结构：从底部向上生长
+        const sortedMonths = Object.keys(monthGroups).sort((a, b) => a.localeCompare(b)); // 从早到晚
+        
+        // 计算树的总高度
+        const treeHeight = 200 + sortedMonths.length * 300;
+        
+        wrapper.innerHTML = `
+            <div class="tree-root" style="min-height: ${treeHeight}px;">
+                <div class="tree-trunk" style="height: ${treeHeight}px;"></div>
+                ${sortedMonths.map((monthKey, monthIndex) => {
+                    const dates = monthGroups[monthKey];
+                    const date = new Date(dates[0]);
+                    const monthName = `${date.getFullYear()}年 ${date.getMonth() + 1}月`;
+                    const totalCount = dates.reduce((sum, d) => sum + this.filteredRecords[d].length, 0);
+                    
+                    // 计算月份分支的位置（从底部向上，每个月份间隔300px）
+                    const bottomOffset = 200 + (sortedMonths.length - monthIndex - 1) * 300;
+                    
+                    return `
+                        <div class="month-branches" style="bottom: ${bottomOffset}px;">
+                            <div class="month-label">${monthName} (${totalCount}条)</div>
+                            <div class="days-branch">
+                                ${dates.map(dateStr => this.renderDayBranch(dateStr)).join('')}
+                            </div>
                         </div>
-                        <div class="days-list">
-                            ${dates.map(dateStr => this.renderDayNode(dateStr)).join('')}
-                        </div>
-                    </div>
-                `;
-            }).join('');
+                    `;
+                }).join('')}
+            </div>
+        `;
         
         // 绑定展开/收起事件
         this.setupToggleEvents();
     }
 
-    // 渲染单个日期节点
-    renderDayNode(dateStr) {
+    // 渲染日期分支节点
+    renderDayBranch(dateStr) {
         const records = this.filteredRecords[dateStr];
         const date = new Date(dateStr);
         const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
         const weekday = weekdays[date.getDay()];
-        const dateDisplay = `${date.getMonth() + 1}月${date.getDate()}日`;
+        const dateDisplay = `${date.getMonth() + 1}/${date.getDate()}`;
         
-        // 默认展开最近7天的记录
+        // 默认展开最近3天的记录
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const recordDate = new Date(dateStr);
         recordDate.setHours(0, 0, 0, 0);
         const daysDiff = (today - recordDate) / (1000 * 60 * 60 * 24);
-        const isExpanded = daysDiff <= 7;
+        const isExpanded = daysDiff <= 3;
         
         return `
-            <div class="day-node ${isExpanded ? 'expanded' : ''}" data-date="${dateStr}">
-                <div class="day-header" onclick="growthTreeManager.toggleDay('${dateStr}')">
-                    <span class="day-dot"></span>
-                    <span class="day-date">${dateDisplay}</span>
-                    <span class="day-weekday">星期${weekday}</span>
-                    <span class="day-count">${records.length} 条</span>
-                    <span class="toggle-icon">▶</span>
+            <div class="day-branch-node ${isExpanded ? 'expanded' : ''}" data-date="${dateStr}">
+                <div class="day-node-circle ${isExpanded ? 'expanded' : ''}" onclick="growthTreeManager.toggleDay('${dateStr}')">
+                    <div class="day-date-text">${dateDisplay}</div>
+                    <div class="day-weekday-text">周${weekday}</div>
+                    ${records.length > 0 ? `<div class="day-count-badge">${records.length}</div>` : ''}
                 </div>
-                <div class="records-list">
-                    ${records.map(record => this.renderRecord(record, dateStr)).join('')}
+                <div class="records-leaves">
+                    ${records.map(record => this.renderRecordLeaf(record, dateStr)).join('')}
                 </div>
             </div>
         `;
     }
 
-    // 渲染单条记录
-    renderRecord(record, dateStr) {
+    // 渲染记录叶子
+    renderRecordLeaf(record, dateStr) {
         const tagsHtml = record.tags && record.tags.length > 0
             ? `<div class="record-tags">${record.tags.map(tag => 
                 `<span class="record-tag">${this.escapeHtml(tag)}</span>`
@@ -242,7 +241,7 @@ class GrowthTreeManager {
         const timeDisplay = record.time ? record.time : '';
         
         return `
-            <div class="record-item">
+            <div class="record-leaf">
                 <div class="record-content">${this.escapeHtml(record.content)}</div>
                 <div class="record-meta">
                     ${tagsHtml}
@@ -260,9 +259,11 @@ class GrowthTreeManager {
 
     // 切换日期展开/收起
     toggleDay(dateStr) {
-        const dayNode = document.querySelector(`.day-node[data-date="${dateStr}"]`);
-        if (dayNode) {
+        const dayNode = document.querySelector(`.day-branch-node[data-date="${dateStr}"]`);
+        const dayCircle = document.querySelector(`.day-branch-node[data-date="${dateStr}"] .day-node-circle`);
+        if (dayNode && dayCircle) {
             dayNode.classList.toggle('expanded');
+            dayCircle.classList.toggle('expanded');
         }
     }
 
@@ -317,6 +318,13 @@ class GrowthTreeManager {
             if (record) {
                 this.openModal(record, dateStr);
             }
+        }
+    }
+
+    // 删除记录（供onclick调用）
+    async handleDeleteRecord(dateStr, recordId) {
+        if (confirm('确定要删除这条记录吗？')) {
+            await this.deleteRecord(dateStr, recordId);
         }
     }
 
@@ -423,7 +431,7 @@ class GrowthTreeManager {
 
     // 设置展开/收起事件（在渲染后调用）
     setupToggleEvents() {
-        // 事件已经在 renderDayNode 中通过 onclick 绑定了
+        // 事件已经在 renderDayBranch 中通过 onclick 绑定了
     }
 }
 
@@ -431,4 +439,3 @@ class GrowthTreeManager {
 document.addEventListener('DOMContentLoaded', () => {
     window.growthTreeManager = new GrowthTreeManager();
 });
-

@@ -1,14 +1,16 @@
 /* ========== 成长树页面样式 ========== */
 
 .growth-tree-container {
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 2rem;
     position: relative;
     z-index: 1;
-    overflow-x: hidden;
+    overflow-x: auto;
+    overflow-y: visible;
     width: 100%;
     box-sizing: border-box;
+    min-height: 100vh;
 }
 
 .back-button {
@@ -27,7 +29,7 @@
 
 /* ========== 控制栏 ========== */
 .growth-tree-controls {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -92,212 +94,238 @@
     align-self: flex-start;
 }
 
-/* ========== 树形结构 ========== */
+/* ========== 真正的树形结构 ========== */
 .tree-wrapper {
+    position: relative;
+    min-height: 600px;
+    padding: 3rem 0;
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    justify-content: center;
 }
 
-.month-group {
+.tree-root {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 树干 - 从底部向上 */
+.tree-trunk {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 200px;
+    background: linear-gradient(180deg, 
+        rgba(139, 92, 246, 0.8) 0%,
+        rgba(79, 140, 255, 0.8) 50%,
+        rgba(0, 212, 255, 0.6) 100%);
+    border-radius: 4px;
+    box-shadow: 
+        0 0 20px rgba(79, 140, 255, 0.5),
+        inset 0 0 10px rgba(255, 255, 255, 0.2);
+    z-index: 1;
+}
+
+.tree-trunk::before {
+    content: '🌱';
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    filter: drop-shadow(0 0 10px rgba(79, 140, 255, 0.8));
+}
+
+/* 月份分支容器 */
+.month-branches {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    min-height: 250px;
+    padding-top: 1rem;
+}
+
+.month-label {
+    position: absolute;
+    top: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 1.5rem;
-    transition: all 0.3s ease;
-    position: relative;
-    margin-left: 0.5rem;
-}
-
-.month-group::before {
-    content: '';
-    position: absolute;
-    left: -0.5rem;
-    top: 2rem;
-    bottom: 2rem;
-    width: 3px;
-    background: linear-gradient(180deg, var(--accent), var(--primary), transparent);
-    border-radius: 2px;
-}
-
-.month-group:hover {
-    box-shadow: 0 8px 24px rgba(79, 140, 255, 0.15);
-}
-
-.month-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--glass-border);
-}
-
-.month-title {
-    font-size: 1.5rem;
+    border: 2px solid var(--primary);
+    border-radius: 20px;
+    padding: 0.5rem 1.5rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    color: var(--text);
-    margin: 0;
+    color: var(--primary-glow);
+    box-shadow: 0 0 20px rgba(79, 140, 255, 0.4);
+    z-index: 10;
+    white-space: nowrap;
 }
 
-.month-count {
-    font-size: 0.9rem;
-    color: var(--text-muted);
+/* 日期节点 - 像树枝上的节点 */
+.days-branch {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+    position: relative;
+    padding-top: 3rem;
 }
 
-.days-list {
+.day-branch-node {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-}
-
-.day-node {
-    position: relative;
-    padding-left: 2.5rem;
-    margin-left: 1rem;
-}
-
-.day-node::before {
-    content: '';
-    position: absolute;
-    left: -1rem;
-    top: 0.8rem;
-    bottom: -1rem;
-    width: 2px;
-    background: linear-gradient(180deg, var(--primary), rgba(79, 140, 255, 0.3));
-}
-
-.day-node:last-child::before {
-    display: none;
-}
-
-.day-node::after {
-    content: '';
-    position: absolute;
-    left: -1rem;
-    top: 0.8rem;
-    width: 0.5rem;
-    height: 2px;
-    background: var(--primary);
-}
-
-.day-header {
-    display: flex;
     align-items: center;
-    gap: 1rem;
-    cursor: pointer;
-    padding: 0.8rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    position: relative;
+    min-width: 200px;
+    max-width: 280px;
 }
 
-.day-header:hover {
-    background: rgba(79, 140, 255, 0.1);
-}
-
-.day-dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--primary);
-    box-shadow: 0 0 15px rgba(79, 140, 255, 0.8), 0 0 30px rgba(79, 140, 255, 0.4);
-    flex-shrink: 0;
+/* 连接线 - 从月份到日期 */
+.day-branch-node::before {
+    content: '';
     position: absolute;
-    left: -1.5rem;
-    border: 2px solid var(--bg-dark);
+    top: -1.5rem;
+    left: 50%;
+    width: 2px;
+    height: 1.5rem;
+    background: linear-gradient(180deg, 
+        rgba(79, 140, 255, 0.6),
+        rgba(79, 140, 255, 0.2));
+    transform: translateX(-50%);
     z-index: 2;
 }
 
-.day-date {
-    font-weight: 600;
-    color: var(--text);
-    font-size: 1.1rem;
+/* 日期节点圆点 */
+.day-node-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border: 3px solid var(--bg-dark);
+    box-shadow: 
+        0 0 25px rgba(79, 140, 255, 0.6),
+        0 0 50px rgba(79, 140, 255, 0.3),
+        inset 0 0 15px rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 5;
+    margin-bottom: 1rem;
 }
 
-.day-weekday {
-    color: var(--text-muted);
-    font-size: 0.9rem;
+.day-node-circle:hover {
+    transform: scale(1.15);
+    box-shadow: 
+        0 0 35px rgba(79, 140, 255, 0.8),
+        0 0 70px rgba(79, 140, 255, 0.5);
 }
 
-.day-count {
-    margin-left: auto;
-    padding: 0.3rem 0.8rem;
-    background: rgba(79, 140, 255, 0.2);
-    border-radius: 12px;
+.day-node-circle.expanded {
+    background: linear-gradient(135deg, var(--accent), var(--secondary));
+    box-shadow: 
+        0 0 30px rgba(0, 212, 255, 0.8),
+        0 0 60px rgba(0, 212, 255, 0.4);
+}
+
+.day-date-text {
     font-size: 0.85rem;
-    color: var(--primary-glow);
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+    text-align: center;
 }
 
-.toggle-icon {
-    margin-left: 0.5rem;
-    transition: transform 0.3s ease;
-    color: var(--text-muted);
+.day-weekday-text {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 2px;
 }
 
-.day-node.expanded .toggle-icon {
-    transform: rotate(90deg);
+.day-count-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--accent);
+    color: var(--bg-dark);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+    min-width: 20px;
+    text-align: center;
 }
 
-.records-list {
-    margin-top: 0.5rem;
-    margin-left: 2rem;
-    padding-left: 1.5rem;
+/* 记录叶子 - 从日期节点展开 */
+.records-leaves {
     display: none;
     flex-direction: column;
     gap: 0.8rem;
-    position: relative;
-    border-left: 2px solid rgba(79, 140, 255, 0.3);
+    margin-top: 1rem;
+    width: 100%;
+    animation: leafGrow 0.4s ease-out;
 }
 
-.day-node.expanded .records-list {
+.day-branch-node.expanded .records-leaves {
     display: flex;
 }
 
-.records-list::before {
-    content: '';
-    position: absolute;
-    left: -2px;
-    top: 0;
-    width: 2px;
-    height: 0.5rem;
-    background: var(--primary);
+@keyframes leafGrow {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
-.record-item {
-    background: rgba(18, 28, 52, 0.5);
-    border: 1px solid rgba(79, 140, 255, 0.2);
+.record-leaf {
+    background: rgba(18, 28, 52, 0.7);
+    border: 1px solid rgba(79, 140, 255, 0.3);
     border-radius: 12px;
     padding: 1rem;
     transition: all 0.3s ease;
     position: relative;
-    padding-left: 2.5rem;
+    backdrop-filter: blur(10px);
 }
 
-.record-item::before {
-    content: '';
+.record-leaf::before {
+    content: '🍃';
     position: absolute;
-    left: 1rem;
-    top: 1.3rem;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    filter: drop-shadow(0 0 5px rgba(79, 140, 255, 0.5));
+    opacity: 0.6;
 }
 
-.record-item:hover {
-    background: rgba(79, 140, 255, 0.1);
+.record-leaf:hover {
+    background: rgba(79, 140, 255, 0.15);
     border-color: var(--primary);
     transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(79, 140, 255, 0.3);
 }
 
 .record-content {
     color: var(--text);
     line-height: 1.6;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
     word-break: break-word;
+    font-size: 0.95rem;
 }
 
 .record-meta {
@@ -315,7 +343,7 @@
 }
 
 .record-tag {
-    padding: 0.2rem 0.6rem;
+    padding: 0.25rem 0.6rem;
     background: rgba(79, 140, 255, 0.2);
     border: 1px solid var(--primary);
     border-radius: 12px;
@@ -324,7 +352,7 @@
 }
 
 .record-time {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
 }
 
@@ -335,7 +363,7 @@
     transition: opacity 0.3s ease;
 }
 
-.record-item:hover .record-actions {
+.record-leaf:hover .record-actions {
     opacity: 1;
 }
 
@@ -369,9 +397,17 @@
 /* ========== 空状态 ========== */
 .empty-state {
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 6rem 2rem;
     color: var(--text-muted);
     font-size: 1.1rem;
+}
+
+.empty-state::before {
+    content: '🌳';
+    display: block;
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
 }
 
 /* ========== 弹窗表单 ========== */
@@ -444,6 +480,17 @@
 }
 
 /* ========== 响应式设计 ========== */
+@media (max-width: 1200px) {
+    .days-branch {
+        gap: 1.5rem;
+    }
+    
+    .day-branch-node {
+        min-width: 180px;
+        max-width: 240px;
+    }
+}
+
 @media (max-width: 768px) {
     .growth-tree-container {
         padding: 1rem;
@@ -453,20 +500,23 @@
         font-size: 2rem;
     }
     
-    .month-group {
-        padding: 1rem;
+    .tree-trunk {
+        height: 150px;
     }
     
-    .day-node {
-        padding-left: 1.5rem;
+    .days-branch {
+        gap: 1rem;
+        flex-direction: column;
+        align-items: center;
     }
     
-    .day-header {
-        flex-wrap: wrap;
+    .day-branch-node {
+        min-width: 100%;
+        max-width: 100%;
     }
     
-    .record-item {
-        padding-left: 2rem;
+    .day-branch-node::before {
+        display: none;
     }
     
     .tag-filter {
@@ -496,5 +546,13 @@
         flex-direction: column;
         align-items: flex-start;
     }
+    
+    .day-node-circle {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .day-date-text {
+        font-size: 0.75rem;
+    }
 }
-
