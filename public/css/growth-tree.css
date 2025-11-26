@@ -106,6 +106,19 @@
     border-radius: 16px;
     padding: 1.5rem;
     transition: all 0.3s ease;
+    position: relative;
+    margin-left: 0.5rem;
+}
+
+.month-group::before {
+    content: '';
+    position: absolute;
+    left: -0.5rem;
+    top: 2rem;
+    bottom: 2rem;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent), var(--primary), transparent);
+    border-radius: 2px;
 }
 
 .month-group:hover {
@@ -141,21 +154,32 @@
 
 .day-node {
     position: relative;
-    padding-left: 2rem;
+    padding-left: 2.5rem;
+    margin-left: 1rem;
 }
 
 .day-node::before {
     content: '';
     position: absolute;
-    left: 0.5rem;
+    left: -1rem;
     top: 0.8rem;
     bottom: -1rem;
     width: 2px;
-    background: linear-gradient(180deg, var(--primary), transparent);
+    background: linear-gradient(180deg, var(--primary), rgba(79, 140, 255, 0.3));
 }
 
 .day-node:last-child::before {
     display: none;
+}
+
+.day-node::after {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 0.8rem;
+    width: 0.5rem;
+    height: 2px;
+    background: var(--primary);
 }
 
 .day-header {
@@ -174,14 +198,16 @@
 }
 
 .day-dot {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: var(--primary);
-    box-shadow: 0 0 10px rgba(79, 140, 255, 0.5);
+    box-shadow: 0 0 15px rgba(79, 140, 255, 0.8), 0 0 30px rgba(79, 140, 255, 0.4);
     flex-shrink: 0;
     position: absolute;
-    left: 0;
+    left: -1.5rem;
+    border: 2px solid var(--bg-dark);
+    z-index: 2;
 }
 
 .day-date {
@@ -216,14 +242,27 @@
 
 .records-list {
     margin-top: 0.5rem;
-    margin-left: 1.5rem;
+    margin-left: 2rem;
+    padding-left: 1.5rem;
     display: none;
     flex-direction: column;
     gap: 0.8rem;
+    position: relative;
+    border-left: 2px solid rgba(79, 140, 255, 0.3);
 }
 
 .day-node.expanded .records-list {
     display: flex;
+}
+
+.records-list::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: 0;
+    width: 2px;
+    height: 0.5rem;
+    background: var(--primary);
 }
 
 .record-item {

@@ -207,8 +207,16 @@ class GrowthTreeManager {
         const weekday = weekdays[date.getDay()];
         const dateDisplay = `${date.getMonth() + 1}月${date.getDate()}日`;
         
+        // 默认展开最近7天的记录
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const recordDate = new Date(dateStr);
+        recordDate.setHours(0, 0, 0, 0);
+        const daysDiff = (today - recordDate) / (1000 * 60 * 60 * 24);
+        const isExpanded = daysDiff <= 7;
+        
         return `
-            <div class="day-node" data-date="${dateStr}">
+            <div class="day-node ${isExpanded ? 'expanded' : ''}" data-date="${dateStr}">
                 <div class="day-header" onclick="growthTreeManager.toggleDay('${dateStr}')">
                     <span class="day-dot"></span>
                     <span class="day-date">${dateDisplay}</span>
