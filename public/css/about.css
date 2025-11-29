@@ -177,11 +177,13 @@
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
+    flex-direction: row; /* 强制横向排列 */
 }
 
 .buttons-container .button-group {
     margin-bottom: 0;
     flex: 0 0 auto;
+    justify-content: flex-start; /* 覆盖 button-group 的 center 对齐 */
 }
 
 @media (max-width: 900px) {
@@ -234,17 +236,21 @@
         padding: 1.1rem 1.3rem;
     }
 
+    /* 小屏幕时仍然保持一行，但按钮可以稍微缩小 */
     .buttons-container {
-        flex-direction: column;
+        flex-direction: row; /* 保持横向排列 */
         gap: 1rem;
+        max-width: 100%;
     }
 
     .buttons-container .button-group {
-        width: 100%;
+        flex: 1; /* 让两个按钮平分空间 */
     }
 
     .buttons-container .button-group .btn {
         width: 100%;
+        padding: 0.8rem 1.5rem; /* 稍微缩小内边距 */
+        font-size: 0.9rem;
     }
 }
 
