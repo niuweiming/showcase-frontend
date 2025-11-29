@@ -1,119 +1,182 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>关于我 - 无风爱自由</title>
-    <link rel="icon" href="../assets/images/niuniu.ico" type="image/x-icon">
-    <meta name="description" content="关于我的页面正在开发中">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/about.css">
-</head>
-<body>
-    <!-- 动态背景 -->
-    <div class="background-animation"></div>
-    
-    <!-- 主内容 -->
-    <main class="hero-container">
-        <div class="about-wrapper">
-            <section class="about-hero fade-in-up">
-                <h1>Hi，我是 Wei ming</h1>
-                <p class="about-intro">
-                    准全栈开发者，专注构建高可靠的后端系统，执着于提升用户体验。我熟悉 Golang、MySQL、Redis 等后端技术栈，正在深入 Kubernetes 与 Docker，并持续探索前端世界的可能性。
-                </p>
-                <div class="about-tags">
-                    <span class="about-tag">北京</span>
-                    <span class="about-tag">大四在读</span>
-                    <span class="about-tag">Golang / Infra/全栈</span>
-                </div>
-            </section>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>关于我 - 无风爱自由</title>
+        <link rel="icon" href="../assets/images/niuniu.ico" type="image/x-icon" />
+        <meta name="description" content="关于我的页面正在开发中" />
+        <link rel="stylesheet" href="../css/styles.css" />
+        <link rel="stylesheet" href="../css/about.css" />
+    </head>
+    <body>
+        <!-- 动态背景 -->
+        <div class="background-animation"></div>
 
-            <section class="section-card fade-in-up-delay">
-                <h2 class="section-title">个人<span>实习经历</span></h2>
-                <div class="timeline">
-                    <article class="timeline-item">
-                        <span class="timeline-dot"></span>
-                        <div class="timeline-date">2024 · 05</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">广州自媒体科技 · Golang 后端实习</h3>
-                            <p class="timeline-desc">第一份线上实习，正式踏入后端开发，搭建业务服务并熟悉团队协作流程。</p>
-                        </div>
-                    </article>
-                    <article class="timeline-item">
-                        <span class="timeline-dot"></span>
-                        <div class="timeline-date">2024 · 06</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">北京有乐今天 · Golang 后端开发实习</h3>
-                            <p class="timeline-desc">第一份线下实习，驻扎望京 SOHO，负责核心接口与性能优化，开启北漂生活。</p>
-                        </div>
-                    </article>
-                    <article class="timeline-item">
-                        <span class="timeline-dot"></span>
-                        <div class="timeline-date">2024 · 09</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">塞克洛普（Remote） · 后端开发</h3>
-                            <p class="timeline-desc">加入为视障人群提供 AI 服务的初创团队，快速迭代后端能力，打磨 AI 相关接口。</p>
-                        </div>
-                    </article>
-                    <article class="timeline-item">
-                        <span class="timeline-dot"></span>
-                        <div class="timeline-date">2024 · 10</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">一平方科技 · 后端开发实习生</h3>
-                            <p class="timeline-desc">线上实习期间深挖业务模块，后端能力显著提升。</p>
-                        </div>
-                    </article>
-                    <article class="timeline-item">
-                        <span class="timeline-dot"></span>
-                        <div class="timeline-date">2024 · 12</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">百度 · 风控开发实习生</h3>
-                            <p class="timeline-desc">体验大厂的体系与流程，负责风控相关项目，同时体会到庞大组织的节奏与挑战。</p>
-                        </div>
-                    </article>
-                    <article class="timeline-item">
-                        <span class="timeline-dot"></span>
-                        <div class="timeline-date">2025 · 02</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">月之暗面 · Kimi 安全团队</h3>
-                            <p class="timeline-desc">加入 AI 安全团队，关注模型安全与产出质量，享受开放积极的团队氛围。</p>
-                        </div>
-                    </article>
-                    <article class="timeline-item">
-                        <span class="timeline-dot"></span>
-                        <div class="timeline-date">2025 · 04</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">得物 · 高并发项目实践</h3>
-                            <p class="timeline-desc">深入高性能场景，参与时间轮算法优化任务，收获宝贵的性能调优经验。</p>
-                        </div>
-                    </article>
-                    <article class="timeline-item">
-                        <span class="timeline-dot"></span>
-                        <div class="timeline-date">2025 · 06</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">Meshy · Infra 实习生</h3>
-                            <p class="timeline-desc">聚焦容器化与基础设施，实践 Kubernetes 等新技术，为秋招充电蓄力。</p>
-                        </div>
-                    </article>
-                </div>
-            </section>
+        <!-- 主内容 -->
+        <main class="hero-container">
+            <div class="about-wrapper">
+                <section class="about-hero fade-in-up">
+                    <h1>Hi，我是 Wei ming</h1>
+                    <p class="about-intro">
+                        准全栈开发者，专注构建高可靠的后端系统，执着于提升用户体验。我熟悉
+                        Golang、MySQL、Redis 等后端技术栈，正在深入 Kubernetes 与
+                        Docker，并持续探索前端世界的可能性。
+                    </p>
+                    <div class="about-tags">
+                        <span class="about-tag">北京</span>
+                        <span class="about-tag">大四在读</span>
+                        <span class="about-tag">Golang / Infra/全栈</span>
+                    </div>
+                </section>
 
-            <section class="closing-card fade-in-up-delay-2">
-                <p class="about-quote">追梦<span>永远在路上</span></p>
-            </section>
-        </div>
-        
-        <!-- 返回首页按钮 -->
-        <div class="button-group fade-in-up-delay" style="margin-top: 2rem;">
-            <a href="index.html" class="btn btn-primary">
-                <span>返回首页</span>
+                <section class="section-card fade-in-up-delay">
+                    <h2 class="section-title">个人<span>实习经历</span></h2>
+                    <div class="timeline">
+                        <article class="timeline-item">
+                            <span class="timeline-dot"></span>
+                            <div class="timeline-date">2024 · 05</div>
+                            <div class="timeline-content">
+                                <h3 class="timeline-role">广州自媒体科技 · Golang 后端实习</h3>
+                                <p class="timeline-desc">
+                                    第一份线上实习，正式踏入后端开发，搭建业务服务并熟悉团队协作流程。
+                                </p>
+                            </div>
+                        </article>
+                        <article class="timeline-item">
+                            <span class="timeline-dot"></span>
+                            <div class="timeline-date">2024 · 06</div>
+                            <div class="timeline-content">
+                                <h3 class="timeline-role">北京有乐今天 · Golang 后端开发实习</h3>
+                                <p class="timeline-desc">
+                                    第一份线下实习，驻扎望京
+                                    SOHO，负责核心接口与性能优化，开启北漂生活。
+                                </p>
+                            </div>
+                        </article>
+                        <article class="timeline-item">
+                            <span class="timeline-dot"></span>
+                            <div class="timeline-date">2024 · 09</div>
+                            <div class="timeline-content">
+                                <h3 class="timeline-role">塞克洛普（Remote） · 后端开发</h3>
+                                <p class="timeline-desc">
+                                    加入为视障人群提供 AI 服务的初创团队，快速迭代后端能力，打磨 AI
+                                    相关接口。
+                                </p>
+                            </div>
+                        </article>
+                        <article class="timeline-item">
+                            <span class="timeline-dot"></span>
+                            <div class="timeline-date">2024 · 10</div>
+                            <div class="timeline-content">
+                                <h3 class="timeline-role">一平方科技 · 后端开发实习生</h3>
+                                <p class="timeline-desc">
+                                    线上实习期间深挖业务模块，后端能力显著提升。
+                                </p>
+                            </div>
+                        </article>
+                        <article class="timeline-item">
+                            <span class="timeline-dot"></span>
+                            <div class="timeline-date">2024 · 12</div>
+                            <div class="timeline-content">
+                                <h3 class="timeline-role">百度 · 风控开发实习生</h3>
+                                <p class="timeline-desc">
+                                    体验大厂的体系与流程，负责风控相关项目，同时体会到庞大组织的节奏与挑战。
+                                </p>
+                            </div>
+                        </article>
+                        <article class="timeline-item">
+                            <span class="timeline-dot"></span>
+                            <div class="timeline-date">2025 · 02</div>
+                            <div class="timeline-content">
+                                <h3 class="timeline-role">月之暗面 · Kimi 安全团队</h3>
+                                <p class="timeline-desc">
+                                    加入 AI
+                                    安全团队，关注模型安全与产出质量，享受开放积极的团队氛围。
+                                </p>
+                            </div>
+                        </article>
+                        <article class="timeline-item">
+                            <span class="timeline-dot"></span>
+                            <div class="timeline-date">2025 · 04</div>
+                            <div class="timeline-content">
+                                <h3 class="timeline-role">得物 · 高并发项目实践</h3>
+                                <p class="timeline-desc">
+                                    深入高性能场景，参与时间轮算法优化任务，收获宝贵的性能调优经验。
+                                </p>
+                            </div>
+                        </article>
+                        <article class="timeline-item">
+                            <span class="timeline-dot"></span>
+                            <div class="timeline-date">2025 · 06</div>
+                            <div class="timeline-content">
+                                <h3 class="timeline-role">Meshy · Infra 实习生</h3>
+                                <p class="timeline-desc">
+                                    聚焦容器化与基础设施，实践 Kubernetes 等新技术，为秋招充电蓄力。
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="closing-card fade-in-up-delay-2">
+                    <p class="about-quote">追梦<span>永远在路上</span></p>
+                </section>
+            </div>
+            <!-- 返回首页按钮 -->
+            <div class="buttons-container fade-in-up-delay" style="margin-top: 2rem">
+                <div class="button-group">
+                    <a href="index.html" class="btn btn-primary">
+                        <span>返回首页</span>
+                    </a>
+                </div>
+                <div class="button-group">
+                    <a href="javascript:void(0)" class="btn btn-secondary" id="contact-btn">
+                        <span>联系我</span>
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <!-- 社交链接 -->
+        <div class="social-links fade-in-up-delay-2">
+            <a
+                href="https://github.com/niuweiming"
+                target="_blank"
+                rel="noopener"
+                class="social-link"
+                title="GitHub"
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                    />
+                </svg>
+            </a>
+            <a href="mailto:2695062156@qq.com" class="social-link" title="邮箱">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+                    />
+                </svg>
             </a>
         </div>
-    </main>
-    
-    <!-- 自定义光标 -->
-    <div class="cursor-follower" id="custom-cursor"></div>
-    
-    <script src="../js/main.js"></script>
-</body>
+
+        <!-- 联系弹窗 -->
+        <div class="modal-overlay" id="contact-modal">
+            <div class="modal-content">
+                <button class="modal-close" id="close-modal">&times;</button>
+                <h2>关注我的公众号</h2>
+                <div class="wechat-qrcode">
+                    <img src="../assets/images/wechat.jpg" alt="微信二维码" />
+                    <p class="wechat-tip">扫描二维码关注我的公众号</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 自定义光标 -->
+        <div class="cursor-follower" id="custom-cursor"></div>
+
+        <script src="../js/main.js"></script>
+    </body>
 </html>
