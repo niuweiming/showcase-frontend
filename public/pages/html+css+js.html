@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML + CSS + JS 快速学习指南</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #2c3e50;
+            padding: 20px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .subsection {
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .subsection h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .subsection h4 {
+            color: #667eea;
+            font-size: 1.2em;
+            margin: 15px 0 10px;
+        }
+
+        .key-point {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .key-point::before {
+            content: "⭐ 重点：";
+            font-weight: bold;
+            color: #f57c00;
+            margin-right: 5px;
+        }
+
+        .example {
+            background: #f1f3f5;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #4caf50;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .example::before {
+            content: "💡 示例：";
+            font-weight: bold;
+            color: #2e7d32;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin: 8px 0;
+            line-height: 1.8;
+        }
+
+        code {
+            background: #f1f3f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+
+        .note {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .note::before {
+            content: "📝 注意：";
+            font-weight: bold;
+            color: #0c5460;
+        }
+
+        .time-badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-left: 10px;
+        }
+
+        .learning-path {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .learning-path h2 {
+            color: white;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .learning-path ul {
+            display: inline-block;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 40px 20px;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 HTML + CSS + JavaScript 快速掌握指南</h1>
+            <p>从零基础到实战，最短时间掌握前端三剑客</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#learning-path">📍 学习路径</a></li>
+                <li><a href="#html">📄 HTML</a></li>
+                <li><a href="#css">🎨 CSS</a></li>
+                <li><a href="#js">⚡ JavaScript</a></li>
+                <li><a href="#practice">🛠️ 实践建议</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <!-- 学习路径 -->
+            <div class="learning-path" id="learning-path">
+                <h2>📍 推荐学习路径</h2>
+                <ul>
+                    <li>第一步：HTML（2-3天）- 掌握页面结构</li>
+                    <li>第二步：CSS（3-4天）- 学习页面样式</li>
+                    <li>第三步：JavaScript（5-7天）- 实现交互功能</li>
+                    <li>第四步：综合实战项目 - 巩固所有知识</li>
+                </ul>
+            </div>
+
+            <!-- HTML 部分 -->
+            <div class="section" id="html">
+                <h2>📄 HTML（超文本标记语言）<span class="time-badge">建议：2-3天</span></h2>
+
+                <div class="subsection">
+                    <h3>1. 基础概念</h3>
+                    <div class="key-point">HTML 是网页的骨架，定义网页的结构和内容</div>
+                    <ul>
+                        <li><strong>标签（Tag）</strong>：用 <code>&lt;tag&gt;</code> 表示，成对出现</li>
+                        <li><strong>元素（Element）</strong>：标签 + 内容</li>
+                        <li><strong>属性（Attribute）</strong>：提供额外信息，如 <code>id</code>、<code>class</code>、<code>src</code></li>
+                    </ul>
+                    <div class="example">
+&lt;div class="container" id="main"&gt;
+    这是一个 div 元素
+&lt;/div&gt;
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>2. 文档结构（必须掌握）</h3>
+                    <div class="example">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;页面标题&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- 页面内容 --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                    </div>
+                    <div class="note">viewport 设置对移动端适配至关重要！</div>
+                </div>
+
+                <div class="subsection">
+                    <h3>3. 常用标签</h3>
+
+                    <h4>文本标签</h4>
+                    <ul>
+                        <li><code>&lt;h1&gt;</code> ~ <code>&lt;h6&gt;</code>：标题，h1 最大</li>
+                        <li><code>&lt;p&gt;</code>：段落</li>
+                        <li><code>&lt;span&gt;</code>：行内容器（不换行）</li>
+                        <li><code>&lt;div&gt;</code>：块级容器（换行）</li>
+                        <li><code>&lt;br&gt;</code>：换行</li>
+                        <li><code>&lt;hr&gt;</code>：水平线</li>
+                    </ul>
+
+                    <h4>链接与媒体</h4>
+                    <ul>
+                        <li><code>&lt;a href="url"&gt;</code>：超链接</li>
+                        <li><code>&lt;img src="path" alt="描述"&gt;</code>：图片（自闭合标签）</li>
+                        <li><code>&lt;video src=""&gt;</code>、<code>&lt;audio src=""&gt;</code>：音视频</li>
+                    </ul>
+
+                    <h4>列表</h4>
+                    <ul>
+                        <li><code>&lt;ul&gt;</code> + <code>&lt;li&gt;</code>：无序列表（圆点）</li>
+                        <li><code>&lt;ol&gt;</code> + <code>&lt;li&gt;</code>：有序列表（数字）</li>
+                        <li><code>&lt;dl&gt;</code>、<code>&lt;dt&gt;</code>、<code>&lt;dd&gt;</code>：定义列表</li>
+                    </ul>
+
+                    <h4>表格</h4>
+                    <div class="example">
+&lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;&lt;th&gt;标题1&lt;/th&gt;&lt;th&gt;标题2&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;数据1&lt;/td&gt;&lt;td&gt;数据2&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+                    </div>
+
+                    <h4>表单（重点）</h4>
+                    <div class="key-point">表单是与用户交互的重要方式</div>
+                    <ul>
+                        <li><code>&lt;form action="" method="GET/POST"&gt;</code>：表单容器</li>
+                        <li><code>&lt;input type="text/password/email/number/radio/checkbox"&gt;</code>：输入框</li>
+                        <li><code>&lt;textarea&gt;</code>：多行文本</li>
+                        <li><code>&lt;select&gt;</code> + <code>&lt;option&gt;</code>：下拉菜单</li>
+                        <li><code>&lt;button&gt;</code>：按钮</li>
+                        <li><strong>重要属性</strong>：<code>placeholder</code>、<code>required</code>、<code>name</code>、<code>value</code></li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>4. HTML5 语义化标签</h3>
+                    <div class="key-point">语义化标签对 SEO 和可访问性非常重要</div>
+                    <ul>
+                        <li><code>&lt;header&gt;</code>：页面头部</li>
+                        <li><code>&lt;nav&gt;</code>：导航栏</li>
+                        <li><code>&lt;main&gt;</code>：主要内容</li>
+                        <li><code>&lt;article&gt;</code>：独立文章</li>
+                        <li><code>&lt;section&gt;</code>：章节</li>
+                        <li><code>&lt;aside&gt;</code>：侧边栏</li>
+                        <li><code>&lt;footer&gt;</code>：页面底部</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>5. 全局属性（所有标签可用）</h3>
+                    <ul>
+                        <li><code>id</code>：唯一标识符（一个页面只能有一个）</li>
+                        <li><code>class</code>：类名（可重复使用）</li>
+                        <li><code>style</code>：内联样式</li>
+                        <li><code>title</code>：提示信息</li>
+                        <li><code>data-*</code>：自定义数据属性</li>
+                    </ul>
+                    <div class="note">id 用于 JavaScript 选择元素，class 用于 CSS 样式和 JS 批量选择</div>
+                </div>
+            </div>
+
+            <!-- CSS 部分 -->
+            <div class="section" id="css">
+                <h2>🎨 CSS（层叠样式表）<span class="time-badge">建议：3-4天</span></h2>
+
+                <div class="subsection">
+                    <h3>1. 基础语法</h3>
+                    <div class="example">
+选择器 {
+    属性名: 属性值;
+    属性名: 属性值;
+}
+
+/* 例如 */
+h1 {
+    color: red;
+    font-size: 24px;
+}
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>2. 选择器（重要！）</h3>
+
+                    <h4>基本选择器</h4>
+                    <ul>
+                        <li><code>元素名 {}</code>：元素选择器，如 <code>div {}</code></li>
+                        <li><code>.类名 {}</code>：类选择器，如 <code>.container {}</code></li>
+                        <li><code>#id名 {}</code>：ID 选择器，如 <code>#main {}</code></li>
+                        <li><code>*</code>：通配符选择器（所有元素）</li>
+                    </ul>
+
+                    <h4>组合选择器</h4>
+                    <ul>
+                        <li><code>div p {}</code>：后代选择器（div 内所有 p）</li>
+                        <li><code>div &gt; p {}</code>：子元素选择器（div 直接子元素 p）</li>
+                        <li><code>div + p {}</code>：相邻兄弟选择器</li>
+                        <li><code>div, p {}</code>：并集选择器</li>
+                    </ul>
+
+                    <h4>伪类选择器</h4>
+                    <ul>
+                        <li><code>:hover</code>：鼠标悬停</li>
+                        <li><code>:active</code>：激活状态</li>
+                        <li><code>:focus</code>：获得焦点</li>
+                        <li><code>:nth-child(n)</code>：第 n 个子元素</li>
+                        <li><code>:first-child</code>、<code>:last-child</code></li>
+                    </ul>
+
+                    <div class="key-point">选择器优先级：!important > 行内样式 > ID > 类 > 元素 > 通配符</div>
+                </div>
+
+                <div class="subsection">
+                    <h3>3. 盒模型（核心概念）</h3>
+                    <div class="key-point">每个元素都是一个盒子，包含：内容、内边距、边框、外边距</div>
+                    <ul>
+                        <li><strong>content</strong>：内容区域</li>
+                        <li><strong>padding</strong>：内边距（内容与边框之间）</li>
+                        <li><strong>border</strong>：边框</li>
+                        <li><strong>margin</strong>：外边距（元素与元素之间）</li>
+                    </ul>
+                    <div class="example">
+.box {
+    width: 200px;
+    padding: 20px;  /* 内边距 */
+    border: 2px solid black;  /* 边框 */
+    margin: 10px;  /* 外边距 */
+    box-sizing: border-box;  /* 重要！让 padding 和 border 包含在 width 内 */
+}
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>4. 常用属性</h3>
+
+                    <h4>文本属性</h4>
+                    <ul>
+                        <li><code>color</code>：文字颜色</li>
+                        <li><code>font-size</code>：字体大小（px、em、rem）</li>
+                        <li><code>font-weight</code>：字重（bold、normal）</li>
+                        <li><code>text-align</code>：对齐方式（left、center、right）</li>
+                        <li><code>line-height</code>：行高</li>
+                        <li><code>text-decoration</code>：文本装饰（none、underline）</li>
+                    </ul>
+
+                    <h4>背景属性</h4>
+                    <ul>
+                        <li><code>background-color</code>：背景色</li>
+                        <li><code>background-image: url('path')</code>：背景图</li>
+                        <li><code>background-size</code>：背景大小（cover、contain）</li>
+                        <li><code>background-position</code>：背景位置</li>
+                    </ul>
+
+                    <h4>边框属性</h4>
+                    <div class="example">
+border: 1px solid red;  /* 宽度 样式 颜色 */
+border-radius: 5px;  /* 圆角 */
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>5. 定位与布局</h3>
+
+                    <h4>display 属性</h4>
+                    <ul>
+                        <li><code>block</code>：块级元素（独占一行）</li>
+                        <li><code>inline</code>：行内元素（不换行）</li>
+                        <li><code>inline-block</code>：行内块（不换行但可设宽高）</li>
+                        <li><code>none</code>：隐藏元素</li>
+                    </ul>
+
+                    <h4>position 定位</h4>
+                    <ul>
+                        <li><code>static</code>：默认值（正常文档流）</li>
+                        <li><code>relative</code>：相对定位（相对于自己）</li>
+                        <li><code>absolute</code>：绝对定位（相对于最近的定位父元素）</li>
+                        <li><code>fixed</code>：固定定位（相对于浏览器窗口）</li>
+                        <li><code>sticky</code>：粘性定位</li>
+                    </ul>
+                    <div class="note">absolute 需要父元素设置 relative/fixed/absolute 才能生效</div>
+
+                    <h4>float 浮动（传统布局）</h4>
+                    <ul>
+                        <li><code>float: left/right</code></li>
+                        <li><code>clear: both</code>：清除浮动</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>6. Flexbox 弹性布局（现代布局方案，重点！）</h3>
+                    <div class="key-point">Flexbox 是最推荐的布局方式，简单灵活</div>
+
+                    <h4>容器属性（父元素）</h4>
+                    <div class="example">
+.container {
+    display: flex;
+
+    /* 主轴方向 */
+    flex-direction: row;  /* row | column | row-reverse */
+
+    /* 换行 */
+    flex-wrap: wrap;  /* nowrap | wrap */
+
+    /* 主轴对齐 */
+    justify-content: center;  /* flex-start | flex-end | center | space-between | space-around */
+
+    /* 交叉轴对齐 */
+    align-items: center;  /* flex-start | flex-end | center | stretch */
+}
+                    </div>
+
+                    <h4>项目属性（子元素）</h4>
+                    <ul>
+                        <li><code>flex: 1</code>：分配剩余空间（常用！）</li>
+                        <li><code>align-self</code>：单独对齐</li>
+                        <li><code>order</code>：排列顺序</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>7. Grid 网格布局（二维布局）</h3>
+                    <div class="example">
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;  /* 三列等宽 */
+    grid-template-rows: 100px 200px;  /* 两行 */
+    gap: 20px;  /* 间距 */
+}
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>8. 响应式设计</h3>
+                    <div class="key-point">让网页适配不同设备尺寸</div>
+                    <div class="example">
+/* 媒体查询 */
+@media (max-width: 768px) {
+    /* 手机端样式 */
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+/* 断点参考 */
+/* 手机：&lt; 768px */
+/* 平板：768px - 1024px */
+/* 桌面：&gt; 1024px */
+                    </div>
+
+                    <h4>响应式单位</h4>
+                    <ul>
+                        <li><code>rem</code>：相对于根元素字体大小</li>
+                        <li><code>em</code>：相对于父元素字体大小</li>
+                        <li><code>vh/vw</code>：视口高度/宽度的百分比</li>
+                        <li><code>%</code>：相对于父元素</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>9. CSS 引入方式</h3>
+                    <ul>
+                        <li><strong>行内样式</strong>：<code>&lt;div style=""&gt;</code></li>
+                        <li><strong>内部样式</strong>：<code>&lt;style&gt;</code> 标签</li>
+                        <li><strong>外部样式</strong>：<code>&lt;link rel="stylesheet" href="style.css"&gt;</code>（推荐）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- JavaScript 部分 -->
+            <div class="section" id="js">
+                <h2>⚡ JavaScript<span class="time-badge">建议：5-7天</span></h2>
+
+                <div class="subsection">
+                    <h3>1. 基础语法</h3>
+
+                    <h4>变量声明</h4>
+                    <div class="key-point">优先使用 const，需要改变时用 let，避免使用 var</div>
+                    <div class="example">
+let name = "张三";  // 可变变量
+const age = 25;     // 常量（不可改）
+var old = "不推荐"; // 旧语法（作用域问题）
+                    </div>
+
+                    <h4>数据类型</h4>
+                    <ul>
+                        <li><strong>基本类型</strong>：字符串（string）、数字（number）、布尔（boolean）、null、undefined、symbol</li>
+                        <li><strong>引用类型</strong>：对象（object）、数组（array）、函数（function）</li>
+                    </ul>
+
+                    <h4>模板字符串</h4>
+                    <div class="example">
+let name = "张三";
+let greeting = `你好，${name}！`;  // 使用反引号
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>2. 操作符</h3>
+                    <ul>
+                        <li><strong>算术</strong>：<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>、<code>%</code>（取余）</li>
+                        <li><strong>比较</strong>：<code>==</code>（弱等于）、<code>===</code>（强等于，推荐）</li>
+                        <li><strong>逻辑</strong>：<code>&amp;&amp;</code>（与）、<code>||</code>（或）、<code>!</code>（非）</li>
+                        <li><strong>赋值</strong>：<code>+=</code>、<code>-=</code>、<code>++</code>、<code>--</code></li>
+                    </ul>
+                    <div class="note">始终使用 === 而不是 ==，避免类型转换陷阱</div>
+                </div>
+
+                <div class="subsection">
+                    <h3>3. 控制流程</h3>
+
+                    <h4>条件语句</h4>
+                    <div class="example">
+if (条件) {
+    // 代码
+} else if (其他条件) {
+    // 代码
+} else {
+    // 代码
+}
+
+// 三元运算符
+let result = condition ? value1 : value2;
+                    </div>
+
+                    <h4>循环</h4>
+                    <div class="example">
+// for 循环
+for (let i = 0; i &lt; 10; i++) {
+    console.log(i);
+}
+
+// for...of（遍历数组）
+for (let item of array) {
+    console.log(item);
+}
+
+// for...in（遍历对象）
+for (let key in object) {
+    console.log(key);
+}
+
+// while 循环
+while (condition) {
+    // 代码
+}
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>4. 函数（核心！）</h3>
+
+                    <h4>函数声明</h4>
+                    <div class="example">
+// 函数声明
+function greet(name) {
+    return `Hello, ${name}`;
+}
+
+// 箭头函数（ES6，推荐）
+const greet = (name) => {
+    return `Hello, ${name}`;
+};
+
+// 简写（单行可省略 return 和大括号）
+const greet = name => `Hello, ${name}`;
+                    </div>
+
+                    <h4>默认参数</h4>
+                    <div class="example">
+function greet(name = "访客") {
+    console.log(`Hello, ${name}`);
+}
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>5. 数组操作（重要！）</h3>
+                    <div class="example">
+let arr = [1, 2, 3, 4, 5];
+
+// 添加/删除
+arr.push(6);        // 尾部添加
+arr.pop();          // 尾部删除
+arr.unshift(0);     // 头部添加
+arr.shift();        // 头部删除
+
+// 遍历
+arr.forEach(item => console.log(item));
+
+// 常用高阶方法
+arr.map(item => item * 2);      // 映射（返回新数组）
+arr.filter(item => item > 2);   // 过滤（返回新数组）
+arr.find(item => item > 2);     // 查找（返回第一个匹配项）
+arr.reduce((sum, item) => sum + item, 0);  // 累计
+
+// 其他
+arr.includes(3);    // 是否包含（返回布尔）
+arr.indexOf(3);     // 查找索引
+arr.splice(1, 1);   // 删除指定位置元素
+arr.slice(1, 3);    // 截取数组
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>6. 对象操作</h3>
+                    <div class="example">
+// 创建对象
+let person = {
+    name: "张三",
+    age: 25,
+    greet: function() {
+        console.log(`Hello, ${this.name}`);
+    }
+};
+
+// 访问属性
+person.name;         // 点表示法
+person["name"];      // 方括号表示法
+
+// 对象解构
+const { name, age } = person;
+
+// 对象展开（复制）
+let newPerson = { ...person, city: "北京" };
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>7. DOM 操作（重点中的重点！）</h3>
+                    <div class="key-point">DOM 是 JavaScript 操作 HTML 的接口</div>
+
+                    <h4>选择元素</h4>
+                    <div class="example">
+// 单个元素
+document.getElementById("id");
+document.querySelector(".class");  // CSS 选择器
+
+// 多个元素
+document.querySelectorAll("div");  // 返回 NodeList
+document.getElementsByClassName("class");
+                    </div>
+
+                    <h4>修改内容</h4>
+                    <div class="example">
+element.textContent = "文本内容";  // 纯文本
+element.innerHTML = "&lt;h1&gt;HTML&lt;/h1&gt;";  // HTML
+element.value = "值";  // 表单元素
+                    </div>
+
+                    <h4>修改样式</h4>
+                    <div class="example">
+element.style.color = "red";
+element.style.fontSize = "20px";
+
+// 添加/删除 class
+element.classList.add("active");
+element.classList.remove("active");
+element.classList.toggle("active");  // 切换
+element.classList.contains("active");  // 检查
+                    </div>
+
+                    <h4>修改属性</h4>
+                    <div class="example">
+element.setAttribute("src", "image.jpg");
+element.getAttribute("src");
+element.removeAttribute("src");
+                    </div>
+
+                    <h4>创建和删除元素</h4>
+                    <div class="example">
+// 创建
+let div = document.createElement("div");
+div.textContent = "新元素";
+document.body.appendChild(div);
+
+// 删除
+element.remove();
+
+// 插入
+parentElement.insertBefore(newElement, referenceElement);
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>8. 事件处理（核心！）</h3>
+
+                    <h4>添加事件</h4>
+                    <div class="example">
+// 方式1：addEventListener（推荐）
+element.addEventListener("click", function() {
+    console.log("被点击了");
+});
+
+// 方式2：HTML 属性（不推荐）
+&lt;button onclick="handleClick()"&gt;点击&lt;/button&gt;
+
+// 方式3：元素属性（不推荐）
+element.onclick = function() {};
+                    </div>
+
+                    <h4>常用事件</h4>
+                    <ul>
+                        <li><code>click</code>：点击</li>
+                        <li><code>submit</code>：表单提交</li>
+                        <li><code>input</code>：输入框变化</li>
+                        <li><code>change</code>：值改变</li>
+                        <li><code>load</code>：页面加载完成</li>
+                        <li><code>mouseover/mouseout</code>：鼠标移入/移出</li>
+                        <li><code>scroll</code>：滚动</li>
+                    </ul>
+
+                    <h4>事件对象</h4>
+                    <div class="example">
+element.addEventListener("click", function(event) {
+    event.preventDefault();  // 阻止默认行为
+    event.stopPropagation(); // 阻止冒泡
+    console.log(event.target);  // 触发事件的元素
+});
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>9. 异步编程</h3>
+
+                    <h4>定时器</h4>
+                    <div class="example">
+setTimeout(() => {
+    console.log("3秒后执行");
+}, 3000);
+
+setInterval(() => {
+    console.log("每秒执行");
+}, 1000);
+                    </div>
+
+                    <h4>Promise（重要）</h4>
+                    <div class="example">
+let promise = new Promise((resolve, reject) => {
+    // 异步操作
+    setTimeout(() => {
+        resolve("成功");
+        // 或
+        // reject("失败");
+    }, 1000);
+});
+
+promise
+    .then(result => console.log(result))
+    .catch(error => console.error(error));
+                    </div>
+
+                    <h4>async/await（ES8，推荐）</h4>
+                    <div class="example">
+async function fetchData() {
+    try {
+        let response = await fetch("api/data");
+        let data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error(error);
+    }
+}
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>10. ES6+ 重要特性</h3>
+                    <ul>
+                        <li><strong>解构赋值</strong>：<code>const { name } = obj;</code></li>
+                        <li><strong>展开运算符</strong>：<code>[...arr]</code>、<code>{...obj}</code></li>
+                        <li><strong>模板字符串</strong>：<code>`Hello ${name}`</code></li>
+                        <li><strong>箭头函数</strong>：<code>(args) => {}</code></li>
+                        <li><strong>类（class）</strong>：面向对象编程</li>
+                        <li><strong>模块化</strong>：<code>import/export</code></li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>11. JavaScript 引入方式</h3>
+                    <ul>
+                        <li><strong>行内</strong>：<code>&lt;button onclick="alert('Hi')"&gt;</code></li>
+                        <li><strong>内部</strong>：<code>&lt;script&gt;代码&lt;/script&gt;</code></li>
+                        <li><strong>外部</strong>：<code>&lt;script src="script.js"&gt;&lt;/script&gt;</code>（推荐）</li>
+                    </ul>
+                    <div class="note">script 标签放在 &lt;/body&gt; 前或使用 <code>defer</code> 属性</div>
+                </div>
+            </div>
+
+            <!-- 实践建议 -->
+            <div class="section" id="practice">
+                <h2>🛠️ 学习建议与实战项目</h2>
+
+                <div class="subsection">
+                    <h3>学习策略</h3>
+                    <ul>
+                        <li><strong>多动手</strong>：每个知识点都要写代码验证</li>
+                        <li><strong>造轮子</strong>：模仿知名网站（如知乎、B站首页）</li>
+                        <li><strong>查文档</strong>：学会使用 MDN、W3School</li>
+                        <li><strong>调试</strong>：掌握浏览器开发者工具（F12）</li>
+                        <li><strong>循序渐进</strong>：不要一次性学太多</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>推荐实战项目（按难度）</h3>
+
+                    <h4>初级项目（HTML + CSS）</h4>
+                    <ul>
+                        <li>个人简历网页</li>
+                        <li>登录/注册表单页面</li>
+                        <li>产品展示卡片</li>
+                        <li>简单的导航栏</li>
+                    </ul>
+
+                    <h4>中级项目（HTML + CSS + JS）</h4>
+                    <ul>
+                        <li>待办事项列表（Todo List）</li>
+                        <li>计算器</li>
+                        <li>倒计时/计时器</li>
+                        <li>轮播图</li>
+                        <li>表单验证</li>
+                    </ul>
+
+                    <h4>高级项目</h4>
+                    <ul>
+                        <li>天气查询应用（调用 API）</li>
+                        <li>简单的博客系统</li>
+                        <li>电商购物车</li>
+                        <li>贪吃蛇/2048 小游戏</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>推荐资源</h3>
+                    <ul>
+                        <li><strong>MDN Web Docs</strong>：最权威的前端文档</li>
+                        <li><strong>W3School</strong>：入门教程</li>
+                        <li><strong>freeCodeCamp</strong>：免费互动教程</li>
+                        <li><strong>CodePen</strong>：在线代码编辑器</li>
+                        <li><strong>GitHub</strong>：找开源项目学习</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>常见错误与调试技巧</h3>
+                    <ul>
+                        <li><strong>检查控制台</strong>：F12 → Console 查看错误</li>
+                        <li><strong>检查元素</strong>：F12 → Elements 查看样式</li>
+                        <li><strong>常见错误</strong>：
+                            <ul>
+                                <li>未闭合的标签</li>
+                                <li>选择器写错</li>
+                                <li>变量名拼写错误</li>
+                                <li>忘记加分号（虽然 JS 会自动添加，但建议加上）</li>
+                                <li>异步代码处理不当</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
