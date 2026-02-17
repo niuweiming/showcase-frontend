@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>新春计算机 - 无风爱自由</title>
+        <link rel="icon" href="../assets/images/niuniu.ico" type="image/x-icon" />
+        <meta name="description" content="神奇的新春计算机，预测时间的魔术" />
+        <link rel="stylesheet" href="../css/styles.css" />
+        <link rel="stylesheet" href="../css/spring-calculator.css" />
+    </head>
+    <body>
+        <!-- 动态背景 -->
+        <div class="background-animation"></div>
+
+        <!-- 主内容 -->
+        <main class="calculator-container">
+            <div class="calculator-card fade-in-up">
+                <h1 class="calculator-title">🎊 新春计算机 🎊</h1>
+                <p class="calculator-subtitle">让我猜猜现在几点了...</p>
+
+                <!-- 步骤1: 输入第一个数字 -->
+                <div class="step step-1 active">
+                    <p class="step-instruction">请输入一个 <span class="highlight">4位数</span></p>
+                    <input 
+                        type="text" 
+                        id="input-first" 
+                        class="number-input" 
+                        maxlength="4" 
+                        placeholder="例如: 1106"
+                    />
+                    <button id="btn-plus" class="calc-btn" disabled>+</button>
+                </div>
+
+                <!-- 步骤2: 输入第二个数字 -->
+                <div class="step step-2">
+                    <p class="step-instruction">请输入一个 <span class="highlight">5位数</span></p>
+                    <input 
+                        type="text" 
+                        id="input-second" 
+                        class="number-input" 
+                        maxlength="5" 
+                        placeholder="例如: 88396"
+                    />
+                    <button id="btn-equals" class="calc-btn" disabled>=</button>
+                </div>
+
+                <!-- 步骤3: 显示结果 -->
+                <div class="step step-3">
+                    <p class="step-instruction">计算结果</p>
+                    <div class="result-display" id="result-display">0</div>
+                    <button id="btn-shuffle" class="calc-btn">开始魔术 ✨</button>
+                </div>
+
+                <!-- 步骤4: 数字按钮区域 -->
+                <div class="step step-4">
+                    <p class="step-instruction">请点击 <span class="highlight">7个</span> 数字</p>
+                    <div class="click-counter">已点击: <span id="click-count">0</span> / 7</div>
+                    <div class="number-grid" id="number-grid"></div>
+                </div>
+
+                <!-- 步骤5: 最终揭晓 -->
+                <div class="step step-5">
+                    <p class="step-instruction">🎉 时间揭晓 🎉</p>
+                    <div class="final-result" id="final-result"></div>
+                    <p class="time-explanation" id="time-explanation"></p>
+                    <button id="btn-restart" class="calc-btn restart-btn">再玩一次</button>
+                </div>
+            </div>
+
+            <!-- 返回首页按钮 -->
+            <a href="/pages/index.html" class="back-home">← 返回首页</a>
+        </main>
+
+        <script src="../js/spring-calculator.js"></script>
+    </body>
+</html>
